@@ -1,8 +1,25 @@
-df_marca = ['Samsung', 'Moto', 'Philco', 'Iphone', 'Xiaomi', 'LG']
+month_movement = pd.read_excel('/content/Fevereiro.xlsx')
 
-def substitui_marca(marca,df_marca):
-  for i in df_marca:
-    if i.lower() in str(marca).lower():
-      return i
-    elif 'sansung' in str(marca).lower():
-      return 'Samsung'
+replace_models = {
+  'samsunga21s': 'samsung',
+  'sansung': 'samsung',
+  's22ultra': 'samsung',
+  'moto' : 'motorola',
+}
+
+month_movement = month_movement.drop(7)
+month_movement = month_movement.dropna()
+
+def replace_phone_model_name(array):
+  phone_model_name = []
+
+  for x in array:
+    first_word = str(x).split(' ', 1)[0]
+    phone_model = first_word.lower()
+
+    if(phone_model in replace_models.keys()):
+      phone_model = replace_models[phone_model]
+
+    phone_model_name.append(phone_model)
+
+  return phone_model_name
